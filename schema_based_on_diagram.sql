@@ -13,6 +13,8 @@ CREATE TABLE medical_history (
   status VARCHAR(255),
 );
 
+CREATE INDEX patient_id_index ON medical_history (patient_id);
+
 -- create treatments table
 CREATE TABLE treatments (
   id SERIAL PRIMARY KEY,
@@ -27,6 +29,9 @@ CREATE TABLE treatments_medical_history (
   medical_history_id INTEGER REFERENCES medical_history(id)
 );
 
+CREATE INDEX treatment_id_index ON treatments_medical_history (treatment_id);
+CREATE INDEX medical_history_id_index ON treatments_medical_history (medical_history_id);
+
 -- create invoices table
 CREATE TABLE invoices (
   id SERIAL PRIMARY KEY,
@@ -36,6 +41,8 @@ CREATE TABLE invoices (
   medical_history_id INTEGER REFERENCES medical_history(id)
 );
 
+CREATE INDEX medical_history_id_index ON invoices (medical_history_id);
+
 -- create invoice_items table
 CREATE TABLE invoice_items (
   id SERIAL PRIMARY KEY,
@@ -44,3 +51,7 @@ CREATE TABLE invoice_items (
   amount DECIMAL(10,2),
   quantity INTEGER
 );
+
+CREATE INDEX invoice_id_index ON invoice_items (invoice_id);
+CREATE INDEX treatment_id_index ON invoice_items (treatment_id);
+
